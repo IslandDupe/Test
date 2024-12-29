@@ -17,7 +17,6 @@
             event.preventDefault();
             const username = document.getElementById('username').value;
 
-            // Fetch the current content of the usernames.json file
             fetch('https://raw.githubusercontent.com/IslandDupe/Test/main/usernames.json', {
                 headers: {
                     'Authorization': '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'
@@ -25,18 +24,14 @@
             })
             .then(response => response.json())
             .then(data => {
-                // Get the current JSON content from GitHub
-                const currentContent = atob(data.content); // Decode from base64
+                const currentContent = atob(data.content);
                 const usernames = JSON.parse(currentContent);
 
-                // Add the new username
                 usernames.push(username);
 
-                // Prepare the updated content
                 const updatedContent = JSON.stringify(usernames, null, 4);
-                const encodedContent = btoa(updatedContent); // Encode to base64
+                const encodedContent = btoa(updatedContent);
 
-                // Create the commit to update the file
                 fetch('https://raw.githubusercontent.com/IslandDupe/Test/main/usernames.json', {
                     method: 'PUT',
                     headers: {
@@ -45,7 +40,7 @@
                     body: JSON.stringify({
                         message: 'Add new username',
                         content: encodedContent,
-                        sha: data.sha // SHA of the current file version
+                        sha: data.sha
                     })
                 })
                 .then(response => response.json())
