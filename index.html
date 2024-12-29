@@ -18,7 +18,7 @@
             const username = document.getElementById('username').value;
 
             // Fetch the current content of the usernames.json file
-            fetch('https://api.github.com/repos/IslandDupe/Test/contents/usernames.json', {
+            fetch('https://raw.githubusercontent.com/IslandDupe/Test/main/usernames.json', {
                 headers: {
                     'Authorization': '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'
                 }
@@ -37,7 +37,7 @@
                 const encodedContent = btoa(updatedContent); // Encode to base64
 
                 // Create the commit to update the file
-                fetch('https://api.github.com/repos/IslandDupe/Test/contents/usernames.json', {
+                fetch('https://raw.githubusercontent.com/IslandDupe/Test/main/usernames.json', {
                     method: 'PUT',
                     headers: {
                         'Authorization': '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'
