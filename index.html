@@ -13,11 +13,9 @@
     </form>
 
     <script>
-        // Adding an event listener to handle the form submission
         document.getElementById('usernameForm').addEventListener('submit', function(event) {
             event.preventDefault();
             
-            // Get the username value from the input
             const username = document.getElementById('username').value.trim();
 
             if (!username) {
@@ -25,10 +23,9 @@
                 return;
             }
 
-            // Fetch the existing usernames from the GitHub file
             fetch('https://raw.githubusercontent.com/IslandDupe/Test/main/usernames.json', {
                 headers: {
-                    'Authorization': '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'
+                    'Authorization': ''
                 }
             })
             .then(response => {
@@ -38,7 +35,6 @@
                 return response.json();
             })
             .then(data => {
-                // Decode the base64 content from the GitHub file
                 const currentContent = data.content ? atob(data.content) : '[]';
                 let usernames;
 
@@ -49,14 +45,11 @@
                     usernames = [];
                 }
 
-                // Add the new username to the list
                 usernames.push(username);
 
-                // Prepare the updated content
                 const updatedContent = JSON.stringify(usernames, null, 4);
                 const encodedContent = btoa(updatedContent);
 
-                // Update the GitHub file with the new usernames list
                 fetch('https://raw.githubusercontent.com/IslandDupe/Test/main/usernames.json', {
                     method: 'PUT',
                     headers: {
@@ -66,7 +59,7 @@
                     body: JSON.stringify({
                         message: 'Add new username',
                         content: encodedContent,
-                        sha: data.sha // Provide the SHA to correctly update the file
+                        sha: data.sha
                     })
                 })
                 .then(response => response.json())
